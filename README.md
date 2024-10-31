@@ -1,39 +1,210 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# 🚀 talker_rhttp_logger
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+A powerful HTTP logging interceptor for [rhttp](https://pub.dev/packages/rhttp) that seamlessly integrates with [Talker](https://pub.dev/packages/talker). Debug your HTTP traffic with detailed, customizable logging!
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+## ✨ Key Features
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+- 🔍 **Comprehensive HTTP Logging** - Log requests, responses, and errors
+- 🎨 **Colorful Output** - Customizable colors for different log types
+- ⚡ **Request/Response Filtering** - Control exactly what gets logged
+- 🛠 **Flexible Configuration** - Fine-tune every aspect of logging
+- 🎯 **Performance Focused** - Minimal overhead logging
 
-## Features
+## 📦 Installation
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+Add to your `pubspec.yaml`:
 
-## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
-```dart
-const like = 'sample';
+```yaml
+dependencies:
+  talker_rhttp_logger: ^0.0.1  # Replace with latest version
 ```
 
-## Additional information
+Then run:
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```bash
+flutter pub get
+```
+
+## 🚀 Quick Start
+
+```dart
+import 'package:talker_rhttp_logger/talker_rhttp_logger.dart';
+import 'package:talker/talker.dart';
+import 'package:rhttp/rhttp.dart';
+
+void main() {
+  // Initialize Talker
+  final talker = Talker();
+  
+  // Create HTTP client with logging
+  final client = RHttpClient(
+    interceptors: [
+      TalkerRHttpLoggerInterceptor(
+        talker: talker,
+      ),
+    ],
+  );
+
+  // Make requests - logs will appear automatically!
+}
+```
+
+## ⚙️ Configuration Options
+
+### Basic Configuration
+
+```dart
+final settings = TalkerRhttpLoggerSettings(
+  // Response logging options
+  printResponseData: true,      // Log response body
+  printResponseHeaders: false,  // Log response headers
+  printResponseMessage: true,   // Log response status message
+  
+  // Request logging options
+  printRequestData: true,       // Log request body
+  printRequestHeaders: false,   // Log request headers
+  
+  // Error logging options
+  printErrorData: true,         // Log error response body
+  printErrorHeaders: true,      // Log error response headers
+  printErrorMessage: true,      // Log error messages
+);
+
+final logger = TalkerRHttpLoggerInterceptor(
+  talker: talker,
+  settings: settings,
+);
+```
+
+### 🎨 Custom Colors
+
+Make your logs visually distinctive with custom colors:
+
+```dart
+final settings = TalkerRhttpLoggerSettings(
+  // Blue for requests
+  requestPen: AnsiPen()..blue(),
+  
+  // Green for successful responses
+  responsePen: AnsiPen()..green(),
+  
+  // Red for errors
+  errorPen: AnsiPen()..red(),
+);
+```
+
+### 🎯 Selective Logging
+
+Control exactly what gets logged using filter functions:
+
+```dart
+final settings = TalkerRhttpLoggerSettings(
+  // Filter requests
+  requestFilter: (request) {
+    // Only log API requests
+    return request.url.path.startsWith('/api/');
+  },
+  
+  // Filter responses
+  responseFilter: (response) {
+    // Only log non-200 responses
+    return response.statusCode != 200;
+  },
+  
+  // Filter errors
+  errorFilter: (error) {
+    // Only log timeout errors
+    return error.type == RhttpExceptionType.connectTimeout;
+  },
+);
+```
+
+## 🔒 Security Best Practices
+
+1. **Minimize Sensitive Data Logging**
+```dart
+final settings = TalkerRhttpLoggerSettings(
+  // Disable headers and body logging
+  printRequestHeaders: false,
+  printResponseHeaders: false,
+  printRequestData: false,
+  printResponseData: false,
+);
+```
+
+2. **Filter Sensitive Endpoints**
+```dart
+final settings = TalkerRhttpLoggerSettings(
+  requestFilter: (request) {
+    // Skip logging of sensitive endpoints
+    final sensitiveEndpoints = ['/auth', '/payment', '/users'];
+    return !sensitiveEndpoints.any(
+      (endpoint) => request.url.path.contains(endpoint),
+    );
+  },
+);
+```
+
+3. **Selective Error Logging**
+```dart
+final settings = TalkerRhttpLoggerSettings(
+  // Only log error messages, not full error data
+  printErrorData: false,
+  printErrorHeaders: false,
+  printErrorMessage: true,
+);
+```
+
+## 📝 Full Settings Reference
+
+```dart
+TalkerRhttpLoggerSettings({
+  // Response Settings
+  bool printResponseData = true,
+  bool printResponseHeaders = false,
+  bool printResponseMessage = true,
+  
+  // Error Settings
+  bool printErrorData = true,
+  bool printErrorHeaders = true,
+  bool printErrorMessage = true,
+  
+  // Request Settings
+  bool printRequestData = true,
+  bool printRequestHeaders = false,
+  
+  // Custom Colors
+  AnsiPen? requestPen,
+  AnsiPen? responsePen,
+  AnsiPen? errorPen,
+  
+  // Custom Filters
+  bool Function(HttpRequest request)? requestFilter,
+  bool Function(HttpResponse response)? responseFilter,
+  bool Function(RhttpException exception)? errorFilter,
+});
+```
+
+## 🤝 Contributing
+
+We welcome contributions! Here's how you can help:
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to your branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📝 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🙋‍♂️ Support
+
+- 🐛 **Found a bug?** [Open an issue](https://github.com/yourusername/talker_rhttp_logger/issues)
+- 💡 **Have a suggestion?** [Create a feature request](https://github.com/yourusername/talker_rhttp_logger/issues/new)
+- 📖 **Need help?** [Check out our discussions](https://github.com/yourusername/talker_rhttp_logger/discussions)
+
+---
+
+Built with ❤️ for the Flutter community by ShreemanArjun
