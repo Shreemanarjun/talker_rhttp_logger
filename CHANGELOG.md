@@ -1,3 +1,8 @@
+## 0.0.3
+
+- fixes README.md
+
+
 ## 0.0.2
 
 - Added status code messages map for better HTTP response interpretation
