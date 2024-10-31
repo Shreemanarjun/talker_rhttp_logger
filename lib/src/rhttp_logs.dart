@@ -104,7 +104,12 @@ class RhttpRequestLog extends TalkerLog {
     var msg = '[$title] [${httpRequest.method.name.toUpperCase()}] $message';
 
     final data = httpRequest.body;
-    final headers = httpRequest.headers;
+    final headers = switch (httpRequest.headers) {
+      null => null,
+      HttpHeaderMap(:final map) => map,
+      HttpHeaderRawMap(:final map) => map,
+      HttpHeaderList(:final list) => list.asMap(),
+    };
 
     try {
       if (settings.printRequestData && data != null) {
@@ -114,8 +119,17 @@ class RhttpRequestLog extends TalkerLog {
         final prettyHeaders = encoder.convert(headers);
         msg += '\nHeaders: $prettyHeaders';
       }
-    } catch (_) {
-      // TODO: add handling can`t convert
+    } catch (e) {
+      msg += '\nError converting data: Unable to format data properly';
+      // Optionally log the error
+      msg += '\nConversion error: ${e.toString()}';
+      // Or provide raw data instead
+      if (data != null) {
+        msg += '\nRaw data: $data';
+      }
+      if (headers != null) {
+        msg += '\nRaw headers: $headers';
+      }
     }
     return msg;
   }
@@ -150,9 +164,7 @@ class RhttpResponseLog extends TalkerLog {
       HttpBytesResponse(:final body) => body,
       HttpStreamResponse(:final body) => body,
     };
-    final headers = response.headers.map(
-      (e) => e,
-    );
+    final headers = response.headerMap;
 
     msg += '\nStatus: ${response.statusCode}';
 
@@ -168,8 +180,13 @@ class RhttpResponseLog extends TalkerLog {
         final prettyHeaders = encoder.convert(headers);
         msg += '\nHeaders: $prettyHeaders';
       }
-    } catch (_) {
-      // TODO: add handling can`t convert
+    } catch (e) {
+      msg += '\nError converting data: Unable to format data properly';
+      // Optionally log the error
+      msg += '\nConversion error: ${e.toString()}';
+      // Or provide raw data instead
+      msg += '\nRaw data: $data';
+      msg += '\nRaw headers: $headers';
     }
     return msg;
   }
@@ -198,41 +215,48 @@ class RhttpErrorLog extends TalkerLog {
     var msg =
         '[$title] [${rhttpException.request.method.name.toUpperCase()}] $message';
 
-    final responseMessage = switch (rhttpException) {
-      RhttpInvalidCertificateException(:final message) => message,
-      RhttpConnectionException(:final message) => message,
-      RhttpStatusCodeException(:final statusCode) =>
-        getStatusMessage(statusCode),
-      RhttpUnknownException(:final message) => message,
-      _ => null,
-    };
-    final statusCode = switch (rhttpException) {
-      RhttpStatusCodeException(:final statusCode) => statusCode,
-      _ => null
-    };
-    final data = switch (rhttpException) {
-      RhttpStatusCodeException(:final body) => body,
-      _ => null
-    };
-    final headers = switch (rhttpException) {
-      RhttpStatusCodeException(:final headerMap) => headerMap,
-      _ => null
-    };
+    try {
+      final responseMessage = switch (rhttpException) {
+        RhttpInvalidCertificateException(:final message) => message,
+        RhttpConnectionException(:final message) => message,
+        RhttpStatusCodeException(:final statusCode) =>
+          getStatusMessage(statusCode),
+        RhttpUnknownException(:final message) => message,
+        _ => null,
+      };
+      final statusCode = switch (rhttpException) {
+        RhttpStatusCodeException(:final statusCode) => statusCode,
+        _ => null
+      };
+      final data = switch (rhttpException) {
+        RhttpStatusCodeException(:final body) => body,
+        _ => null
+      };
+      final headers = switch (rhttpException) {
+        RhttpStatusCodeException(:final headerMap) => headerMap,
+        _ => null
+      };
 
-    if (statusCode != null) {
-      msg += '\nStatus: $statusCode';
-    }
+      if (statusCode != null) {
+        msg += '\nStatus: $statusCode';
+      }
 
-    if (settings.printErrorMessage) {
-      msg += '\nMessage: $responseMessage';
-    }
+      if (settings.printErrorMessage) {
+        msg += '\nMessage: $responseMessage';
+      }
 
-    if (settings.printErrorData) {
-      msg += '\nData: $data';
-    }
-    if (settings.printErrorHeaders) {
-      final prettyHeaders = encoder.convert(headers);
-      msg += '\nHeaders: $prettyHeaders';
+      if (settings.printErrorData) {
+        msg += '\nData: $data';
+      }
+      if (settings.printErrorHeaders) {
+        final prettyHeaders = encoder.convert(headers);
+        msg += '\nHeaders: $prettyHeaders';
+      }
+    } catch (e) {
+      msg += '\nError converting data: Unable to format data properly';
+      // Optionally log the error
+      msg += '\nConversion error: ${e.toString()}';
+      // Or provide raw data instead
     }
     return msg;
   }
