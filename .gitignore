@@ -27,3 +27,10 @@ migrate_working_dir/
 **/doc/api/
 .dart_tool/
 build/
+
+# Additional entries for the example folder
+example/.dart_tool/
+example/.idea/
+example/build/
+example/.flutter-plugins
+example/.flutter-plugins-dependencies

@@ -55,7 +55,7 @@ class _RhttpLoggerUiState extends State<RhttpLoggerUi> {
 
   Future<String> getComments() async {
     final response = await rhttpClient.get('https://httpstat.us/204',
-        headers: HttpHeaders.rawMap({
+        headers: const HttpHeaders.rawMap({
           'Accept': 'application/json',
         }));
     return response.body;
