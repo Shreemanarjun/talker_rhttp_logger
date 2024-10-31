@@ -1,3 +1,7 @@
-## 0.0.1
+## 0.0.1 
 
-* TODO: Describe initial release.
+🎉 Initial Release
+
+- ✨ First public release
+- 🚀 Core functionality implemented
+- 📝 Basic documentation added

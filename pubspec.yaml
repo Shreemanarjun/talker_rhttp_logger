@@ -1,7 +1,14 @@
 name: talker_rhttp_logger
-description: "A new Flutter package project."
+description: "A Flutter package for logging HTTP requests and responses using Talker."
 version: 0.0.1
-homepage: github.com
+homepage: https://github.com/Shreemanarjun/talker_rhttp_logger
+repository: https://github.com/Shreemanarjun/talker_rhttp_logger
+issue_tracker: https://github.com/Shreemanarjun/talker_rhttp_logger/issues
+license: MIT  # or any other license you choose
+keywords:
+  - flutter
+  - rhttp
+  - talker
 
 environment:
   sdk: ^3.5.4

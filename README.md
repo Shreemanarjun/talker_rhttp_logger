@@ -201,9 +201,9 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🙋‍♂️ Support
 
-- 🐛 **Found a bug?** [Open an issue](https://github.com/yourusername/talker_rhttp_logger/issues)
-- 💡 **Have a suggestion?** [Create a feature request](https://github.com/yourusername/talker_rhttp_logger/issues/new)
-- 📖 **Need help?** [Check out our discussions](https://github.com/yourusername/talker_rhttp_logger/discussions)
+- 🐛 **Found a bug?** [Open an issue](https://github.com/Shreemanarjun/talker_rhttp_logger/issues)
+- 💡 **Have a suggestion?** [Create a feature request](https://github.com/Shreemanarjun/talker_rhttp_logger/issues/new)
+- 📖 **Need help?** [Check out our discussions](https://github.com/Shreemanarjun/talker_rhttp_logger/discussions)
 
 ---
 
