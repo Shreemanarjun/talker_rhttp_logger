@@ -16,7 +16,7 @@ Add to your `pubspec.yaml`:
 
 ```yaml
 dependencies:
-  talker_rhttp_logger: ^0.0.1  # Replace with latest version
+  talker_rhttp_logger: ^latest_version  # Replace with latest version
 ```
 
 Then run:
