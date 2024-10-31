@@ -1,0 +1,4 @@
+dependency_overrides:
+  talker_rhttp_logger:
+    path:
+      ../../talker_rhttp_logger

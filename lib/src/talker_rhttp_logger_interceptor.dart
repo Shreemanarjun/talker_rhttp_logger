@@ -66,8 +66,8 @@ class TalkerRhttpLogger extends Interceptor {
         settings: settings,
       );
       _talker.logTyped(httpLog);
-    } catch (_) {
-      //pass
+    } catch (e) {
+      _talker.error(e);
     }
     return Interceptor.next(request);
   }
@@ -87,8 +87,8 @@ class TalkerRhttpLogger extends Interceptor {
         response: response,
       );
       _talker.logTyped(httpLog);
-    } catch (_) {
-      //pass
+    } catch (e) {
+      _talker.error(e);
     }
     return Interceptor.next(response);
   }
@@ -96,7 +96,6 @@ class TalkerRhttpLogger extends Interceptor {
   @override
   Future<InterceptorResult<RhttpException>> onError(
       RhttpException exception) async {
-    super.onError(exception);
     final accepted = settings.errorFilter?.call(exception) ?? true;
     if (!accepted) {
       return Interceptor.stop();
@@ -109,9 +108,11 @@ class TalkerRhttpLogger extends Interceptor {
         settings: settings,
       );
       _talker.logTyped(httpErrorLog);
-    } catch (_) {
+    } catch (e) {
+      _talker.error(e);
       //pass
     }
+    super.onError(exception);
     return Interceptor.next(exception);
   }
 }
