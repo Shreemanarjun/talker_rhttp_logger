@@ -1,3 +1,9 @@
+## 0.0.4
+
+- Updated rhttp dependency from 0.8.1 to 0.9.1, and talker dependency from 4.4.1 to 4.4.7.
+- Modified TalkerRhttpLogger to use migrated logCustom method(logTyped)
+
+
 ## 0.0.3
 
 - fixes README.md
