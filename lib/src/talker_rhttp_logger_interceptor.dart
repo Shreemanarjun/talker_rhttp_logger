@@ -65,7 +65,7 @@ class TalkerRhttpLogger extends Interceptor {
         httpRequest: request,
         settings: settings,
       );
-      _talker.logTyped(httpLog);
+      _talker.logCustom(httpLog);
     } catch (e) {
       _talker.error(e);
     }
@@ -86,7 +86,7 @@ class TalkerRhttpLogger extends Interceptor {
         settings: settings,
         response: response,
       );
-      _talker.logTyped(httpLog);
+      _talker.logCustom(httpLog);
     } catch (e) {
       _talker.error(e);
     }
@@ -107,7 +107,7 @@ class TalkerRhttpLogger extends Interceptor {
         rhttpException: exception,
         settings: settings,
       );
-      _talker.logTyped(httpErrorLog);
+      _talker.logCustom(httpErrorLog);
     } catch (e) {
       _talker.error(e);
       //pass
