@@ -1,3 +1,7 @@
+## 0.0.5
+- Updated rhttp and talker dependencies to 0.9.3 and 4.5.1.
+
+
 ## 0.0.4
 
 - Updated rhttp dependency from 0.8.1 to 0.9.1, and talker dependency from 4.4.1 to 4.4.7.
