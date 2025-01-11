@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:talker/talker.dart';
 import 'package:rhttp/rhttp.dart';
+import 'package:talker_rhttp_logger/src/utils/curl_command_generator.dart';
 
 import 'package:talker_rhttp_logger/talker_rhttp_logger.dart';
 
@@ -262,6 +263,51 @@ class RhttpErrorLog extends TalkerLog {
       msg += '\nConversion error: ${e.toString()}';
       // Or provide raw data instead
     }
+    return msg;
+  }
+}
+
+class RhttpCurlLog extends TalkerLog {
+  RhttpCurlLog(
+    String super.message, {
+    required this.httpRequest,
+    required this.httpResponse,
+    required this.settings,
+    required this.requestBody,
+    required this.responseBody,
+  });
+
+  final HttpRequest httpRequest;
+  final HttpResponse? httpResponse;
+  final TalkerRhttpLoggerSettings settings;
+  final String? requestBody;
+  final String? responseBody;
+
+  @override
+  AnsiPen get pen => (AnsiPen()..xterm(214));
+
+  @override
+  String get key => "Curl";
+
+  @override
+  String generateTextMessage({
+    TimeFormat timeFormat = TimeFormat.timeAndSeconds,
+  }) {
+    var msg = '[$title] [${httpRequest.method.name.toUpperCase()}] $message';
+
+    try {
+      // Generate a single cURL command that includes both request and response
+      final curlCommand = generateCurlCommand(
+        request: httpRequest,
+        response: httpResponse,
+        responseBody: responseBody,
+        dataBody: requestBody,
+      );
+      msg += '\n$curlCommand';
+    } catch (e) {
+      msg += '\nError generating cURL command: ${e.toString()}';
+    }
+
     return msg;
   }
 }

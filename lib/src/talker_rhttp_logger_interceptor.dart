@@ -87,6 +87,17 @@ class TalkerRhttpLogger extends Interceptor {
           response: response,
           responseData: (await response.readableData()));
       _talker.logCustom(httpLog);
+      if (settings.printCurlCommand) {
+        final curllog = RhttpCurlLog(
+          message,
+          httpRequest: response.request,
+          httpResponse: response,
+          settings: settings,
+          requestBody: await response.request.body.readableData(indent: false),
+          responseBody: await response.readableData(indent: false),
+        );
+        _talker.logCustom(curllog);
+      }
     } catch (e) {
       _talker.error(e);
     }
@@ -108,6 +119,35 @@ class TalkerRhttpLogger extends Interceptor {
         settings: settings,
       );
       _talker.logCustom(httpErrorLog);
+      if (settings.printCurlCommand) {
+        final Object? data = switch (exception) {
+          RhttpStatusCodeException(:final body) => body,
+          _ => null
+        };
+        final curllog = RhttpCurlLog(
+          message,
+          httpRequest: exception.request,
+          settings: settings,
+          requestBody: await exception.request.body.readableData(indent: false),
+          responseBody: data.toString(),
+          httpResponse: switch (exception) {
+            RhttpStatusCodeException(
+              :final statusCode,
+              :final headers,
+              :final body,
+            ) =>
+              HttpTextResponse(
+                body: body.toString(),
+                request: exception.request,
+                version: HttpVersion.other,
+                statusCode: statusCode,
+                headers: headers,
+              ),
+            _ => null
+          },
+        );
+        _talker.logCustom(curllog);
+      }
     } catch (e) {
       _talker.error(e);
       //pass

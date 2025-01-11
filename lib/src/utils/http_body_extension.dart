@@ -4,12 +4,12 @@ import 'dart:typed_data';
 import 'package:rhttp/rhttp.dart';
 
 extension HttpBodyExtension on HttpBody? {
-  Future<String?> readableData() async {
+  Future<String?> readableData({bool indent = true}) async {
     try {
       return switch (this) {
         HttpBodyText(:final text) => text,
         HttpBodyJson(:final json) =>
-          const JsonEncoder.withIndent('  ').convert(json),
+          JsonEncoder.withIndent(indent ? '  ' : null).convert(json),
         HttpBodyBytes(:final Uint8List bytes) => bytes.toString(),
         HttpBodyBytesStream(:final Stream<List<int>> stream) =>
           await _streamToString(stream),

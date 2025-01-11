@@ -12,6 +12,7 @@ class TalkerRhttpLoggerSettings {
     this.printErrorMessage = true,
     this.printRequestData = true,
     this.printRequestHeaders = false,
+    this.printCurlCommand = false,
     this.requestPen,
     this.responsePen,
     this.errorPen,
@@ -43,6 +44,9 @@ class TalkerRhttpLoggerSettings {
 
   /// Print [request.headers] if true
   final bool printRequestHeaders;
+
+  /// Print curl command if true
+  final bool printCurlCommand;
 
   /// Field to set custom http request console logs color
   ///```
@@ -98,6 +102,7 @@ class TalkerRhttpLoggerSettings {
     bool? printErrorMessage,
     bool? printRequestData,
     bool? printRequestHeaders,
+    bool? printCurlCommand,
     AnsiPen? requestPen,
     AnsiPen? responsePen,
     AnsiPen? errorPen,
@@ -114,6 +119,7 @@ class TalkerRhttpLoggerSettings {
       printErrorMessage: printErrorMessage ?? this.printErrorMessage,
       printRequestData: printRequestData ?? this.printRequestData,
       printRequestHeaders: printRequestHeaders ?? this.printRequestHeaders,
+      printCurlCommand: printCurlCommand ?? this.printCurlCommand,
       requestPen: requestPen ?? this.requestPen,
       responsePen: responsePen ?? this.responsePen,
       errorPen: errorPen ?? this.errorPen,
