@@ -1,3 +1,19 @@
+### 0.0.6
+
+- **Added Features:**
+  - Introduced `RhttpLogs` and `RhttpCurlLog` classes for enhanced logging capabilities.
+  - Added a curl command generator utility for easy curl command generation.
+
+- **Fixes:**
+  - Fixed issues related to response body printing for better accuracy and readability.
+
+- **Enhancements:**
+  - Improved curl setting for easy curl *printing*.
+
+---
+
+This update includes new classes and utilities to streamline logging and curl command generation, along with fixes to ensure accurate response body printing.
+
 ## 0.0.5
 - Updated rhttp and talker dependencies to 0.9.3 and 4.5.1.
 
@@ -23,7 +39,7 @@
 - Improved error handling in RhttpLoggerUi and RhttpLogs classes
 
 
-## 0.0.1 
+## 0.0.1
 
 🎉 Initial Release
 
