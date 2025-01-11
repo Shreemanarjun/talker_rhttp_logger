@@ -59,7 +59,7 @@ class TalkerRhttpLogger extends Interceptor {
       return Interceptor.stop();
     }
     try {
-      final message = request.url;
+      final message = "${request.settings?.baseUrl}${request.url}";
       final httpLog = RhttpRequestLog(
         message,
         httpRequest: request,
@@ -81,7 +81,8 @@ class TalkerRhttpLogger extends Interceptor {
       return Interceptor.stop();
     }
     try {
-      final message = response.request.url;
+      final message =
+          "${response.request.settings?.baseUrl}${response.request.url} ";
       final httpLog = RhttpResponseLog(message,
           settings: settings,
           response: response,
@@ -112,7 +113,8 @@ class TalkerRhttpLogger extends Interceptor {
       return Interceptor.stop();
     }
     try {
-      final message = exception.request.url;
+      final message =
+          "${exception.request.settings?.baseUrl}${exception.request.url}";
       final httpErrorLog = RhttpErrorLog(
         message,
         rhttpException: exception,

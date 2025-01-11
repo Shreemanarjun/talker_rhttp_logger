@@ -44,6 +44,7 @@ class _RhttpLoggerUiState extends State<RhttpLoggerUi> {
 
   Future<String> getComments() async {
     rhttpClient = await RhttpClient.create(
+      settings: const ClientSettings(baseUrl: "https://httpstat.us"),
       interceptors: [
         TalkerRhttpLogger(
           talker: TalkerFlutter.init(),
@@ -56,7 +57,7 @@ class _RhttpLoggerUiState extends State<RhttpLoggerUi> {
       ],
     );
     final response = await rhttpClient.post(
-      'https://httpstat.us/201',
+      '/201',
       body: const HttpBody.json(
         {
           'name': 'John Doe',

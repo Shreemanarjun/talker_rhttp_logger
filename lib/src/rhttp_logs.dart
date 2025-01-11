@@ -107,7 +107,7 @@ class RhttpRequestLog extends TalkerLog {
   String generateTextMessage({
     TimeFormat timeFormat = TimeFormat.timeAndSeconds,
   }) {
-    var msg = '[$title] [${httpRequest.method.name.toUpperCase()}] $message';
+    var msg = '[$title]\n${httpRequest.method.name.toUpperCase()} $message';
 
     final headers = switch (httpRequest.headers) {
       null => null,
@@ -163,7 +163,7 @@ class RhttpResponseLog extends TalkerLog {
     TimeFormat timeFormat = TimeFormat.timeAndSeconds,
   }) {
     var msg =
-        '[$title] [${response.request.method.name.toUpperCase()}] $message';
+        '[$title]\n${response.request.method.name.toUpperCase()} $message';
 
     final responseMessage = getStatusMessage(response.statusCode);
 
@@ -216,7 +216,7 @@ class RhttpErrorLog extends TalkerLog {
     TimeFormat timeFormat = TimeFormat.timeAndSeconds,
   }) {
     var msg =
-        '[$title] [${rhttpException.request.method.name.toUpperCase()}] $message';
+        '[$title]\n${rhttpException.request.method.name.toUpperCase()} $message';
 
     try {
       final responseMessage = switch (rhttpException) {
@@ -293,7 +293,7 @@ class RhttpCurlLog extends TalkerLog {
   String generateTextMessage({
     TimeFormat timeFormat = TimeFormat.timeAndSeconds,
   }) {
-    var msg = '[$title] [${httpRequest.method.name.toUpperCase()}] $message';
+    var msg = '[$title]\n${httpRequest.method.name.toUpperCase()} $message';
 
     try {
       // Generate a single cURL command that includes both request and response
