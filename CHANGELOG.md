@@ -1,4 +1,8 @@
-### 0.0.6
+### 0.0.7
+- Fix URL Bugs in response logs
+
+
+## 0.0.6
 
 - **Added Features:**
   - Introduced `RhttpLogs` and `RhttpCurlLog` classes for enhanced logging capabilities.
