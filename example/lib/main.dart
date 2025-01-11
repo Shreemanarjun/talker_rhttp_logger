@@ -38,27 +38,29 @@ class _RhttpLoggerUiState extends State<RhttpLoggerUi> {
 
   @override
   void initState() {
-    rhttpClient = RhttpClient.createSync(
+    super.initState();
+    fetchComments();
+  }
+
+  Future<String> getComments() async {
+    rhttpClient = await RhttpClient.create(
       interceptors: [
         TalkerRhttpLogger(
           talker: TalkerFlutter.init(),
           settings: const TalkerRhttpLoggerSettings(
             printRequestHeaders: true,
             printResponseHeaders: true,
+            printCurlCommand: true,
           ),
         )
       ],
     );
-    super.initState();
-    fetchComments();
-  }
-
-  Future<String> getComments() async {
     final response = await rhttpClient.post(
-      'https://httpstat.us/201s',
+      'https://httpstat.us/201',
       body: const HttpBody.json(
         {
           'name': 'John Doe',
+          'age': 30,
         },
       ),
       headers: const HttpHeaders.rawMap({
