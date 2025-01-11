@@ -57,12 +57,9 @@ class _RhttpLoggerUiState extends State<RhttpLoggerUi> {
       ],
     );
     final response = await rhttpClient.post(
-      '/201',
+      '/302',
       body: const HttpBody.json(
-        {
-          'name': 'John Doe',
-          'age': 30,
-        },
+        null,
       ),
       headers: const HttpHeaders.rawMap({
         'Accept': 'application/json',

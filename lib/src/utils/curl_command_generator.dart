@@ -31,32 +31,36 @@ String generateCurlCommand({
   if (dataBody != null && dataBody.isNotEmpty) {
     try {
       final jsonData = jsonDecode(dataBody);
-      if (jsonData is Map<String, dynamic>) {
-        // Handle Map objects differently
-        String formattedJson = '';
-        var entries = [];
+      if (jsonData != null) {
+        if (jsonData is Map<String, dynamic>) {
+          // Handle Map objects differently
+          String formattedJson = '';
+          var entries = [];
 
-        jsonData.forEach((key, value) {
-          // Remove quotes from keys but keep values as-is
-          if (value is String) {
-            entries.add("""-d '$key="$value"' """);
-          } else {
-            entries.add("""-d '$key=$value' """);
-          }
-        });
+          jsonData.forEach((key, value) {
+            // Remove quotes from keys but keep values as-is
+            if (value is String) {
+              entries.add("""-d '$key="$value"' """);
+            } else {
+              entries.add("""-d '$key=$value' """);
+            }
+          });
 
-        formattedJson += entries.join('');
-        parts.add(formattedJson);
-      } else {
-        // Handle non-Map JSON as before
-        String unquotedJson = jsonEncode(jsonData)
-            .replaceAll('":', ':')
-            .replaceAll('{"', '{')
-            .replaceAll('"}', '}')
-            .replaceAll('","', ',');
-        parts.add("-d $unquotedJson");
+          formattedJson += entries.join('');
+          parts.add(formattedJson);
+        } else {
+          // Handle non-Map JSON as before
+          String unquotedJson = jsonEncode(jsonData)
+              .replaceAll('":', ':')
+              .replaceAll('{"', '{')
+              .replaceAll('"}', '}')
+              .replaceAll('","', ',');
+          parts.add("-d $unquotedJson");
+        }
       }
-    } catch (_) {}
+    } catch (_) {
+      parts.add("-d $dataBody");
+    }
   }
 
   return parts.join(' ');

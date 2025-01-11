@@ -8,8 +8,9 @@ extension HttpBodyExtension on HttpBody? {
     try {
       return switch (this) {
         HttpBodyText(:final text) => text,
-        HttpBodyJson(:final json) =>
-          JsonEncoder.withIndent(indent ? '  ' : null).convert(json),
+        HttpBodyJson(:final json) => json != null
+            ? JsonEncoder.withIndent(indent ? '  ' : null).convert(json)
+            : null,
         HttpBodyBytes(:final Uint8List bytes) => bytes.toString(),
         HttpBodyBytesStream(:final Stream<List<int>> stream) =>
           await _streamToString(stream),

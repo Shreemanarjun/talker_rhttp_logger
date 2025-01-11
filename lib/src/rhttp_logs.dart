@@ -176,7 +176,7 @@ class RhttpResponseLog extends TalkerLog {
     }
 
     try {
-      if (settings.printResponseData) {
+      if (settings.printResponseData && responseData != null) {
         msg += '\nData: \n$responseData';
       }
       if (settings.printResponseHeaders && headers.isNotEmpty) {

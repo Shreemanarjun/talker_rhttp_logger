@@ -28,6 +28,9 @@ extension HttpResponseExtension on HttpResponse? {
   }
 
   String? _tryJsonEncode(dynamic bodyToJson, {bool indent = true}) {
+    if (bodyToJson == null) {
+      return null;
+    }
     try {
       // Add indentation to the JSON output
       final encoder = JsonEncoder.withIndent(indent ? '  ' : null);
