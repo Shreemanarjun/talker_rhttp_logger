@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'dart:typed_data';
-import 'dart:async'; // Import for Stream handling
+
 import 'package:rhttp/rhttp.dart';
 
 extension HttpBodyExtension on HttpBody? {
@@ -8,7 +8,8 @@ extension HttpBodyExtension on HttpBody? {
     try {
       return switch (this) {
         HttpBodyText(:final text) => text,
-        HttpBodyJson(:final json) => jsonEncode(json),
+        HttpBodyJson(:final json) =>
+          const JsonEncoder.withIndent('  ').convert(json),
         HttpBodyBytes(:final Uint8List bytes) => bytes.toString(),
         HttpBodyBytesStream(:final Stream<List<int>> stream) =>
           await _streamToString(stream),

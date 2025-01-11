@@ -27,7 +27,9 @@ extension HttpResponseExtension on HttpResponse? {
 
   String? _tryJsonEncode(dynamic bodyToJson) {
     try {
-      return jsonEncode(bodyToJson);
+      // Add indentation to the JSON output
+      const encoder = JsonEncoder.withIndent('  ');
+      return encoder.convert(bodyToJson);
     } catch (e) {
       return null; // Return null if jsonEncode fails
     }

@@ -1,6 +1,5 @@
 import 'package:rhttp/rhttp.dart';
 import 'package:talker/talker.dart';
-import 'package:talker_rhttp_logger/src/utils/http_response_extension.dart';
 
 import 'package:talker_rhttp_logger/talker_rhttp_logger.dart';
 

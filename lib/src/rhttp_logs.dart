@@ -117,7 +117,7 @@ class RhttpRequestLog extends TalkerLog {
 
     try {
       if (settings.printRequestData && dataBody != null) {
-        msg += '\nData: $dataBody';
+        msg += '\nData:\n$dataBody';
       }
       if (settings.printRequestHeaders && headers != null) {
         final prettyHeaders = encoder.convert(headers);
@@ -129,7 +129,7 @@ class RhttpRequestLog extends TalkerLog {
       msg += '\nConversion error: ${e.toString()}';
       // Or provide raw data instead
       if (dataBody != null) {
-        msg += '\nRaw data: $dataBody';
+        msg += '\nRaw data:\n$dataBody';
       }
       if (headers != null) {
         msg += '\nRaw headers: $headers';
@@ -176,7 +176,7 @@ class RhttpResponseLog extends TalkerLog {
 
     try {
       if (settings.printResponseData) {
-        msg += '\nData: $responseData';
+        msg += '\nData: \n$responseData';
       }
       if (settings.printResponseHeaders && headers.isNotEmpty) {
         final prettyHeaders = encoder.convert(headers);
@@ -187,7 +187,7 @@ class RhttpResponseLog extends TalkerLog {
       // Optionally log the error
       msg += '\nConversion error: ${e.toString()}';
       // Or provide raw data instead
-      msg += '\nRaw data: $responseData';
+      msg += '\nRaw data:\n $responseData';
       msg += '\nRaw headers: $headers';
     }
     return msg;
@@ -205,7 +205,7 @@ class RhttpErrorLog extends TalkerLog {
   final TalkerRhttpLoggerSettings settings;
 
   @override
-  AnsiPen get pen => settings.errorPen ?? (AnsiPen()..red());
+  AnsiPen get pen => settings.errorPen ?? (AnsiPen()..xterm(196));
 
   @override
   String get key => TalkerLogType.httpError.key;
@@ -230,7 +230,7 @@ class RhttpErrorLog extends TalkerLog {
         RhttpStatusCodeException(:final statusCode) => statusCode,
         _ => null
       };
-      final data = switch (rhttpException) {
+      final Object? data = switch (rhttpException) {
         RhttpStatusCodeException(:final body) => body,
         _ => null
       };
@@ -247,8 +247,10 @@ class RhttpErrorLog extends TalkerLog {
         msg += '\nMessage: $responseMessage';
       }
 
-      if (settings.printErrorData) {
-        msg += '\nData: $data';
+      if (settings.printErrorData &&
+          data != null &&
+          data.toString().isNotEmpty) {
+        msg += '\nData:\n$data';
       }
       if (settings.printErrorHeaders) {
         final prettyHeaders = encoder.convert(headers);
