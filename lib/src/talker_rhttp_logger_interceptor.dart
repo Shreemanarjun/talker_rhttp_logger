@@ -1,7 +1,8 @@
 import 'package:rhttp/rhttp.dart';
 import 'package:talker/talker.dart';
-import 'package:talker_rhttp_logger/src/rhttp_logs.dart';
-import 'package:talker_rhttp_logger/src/talker_rhttp_logger_settings.dart';
+import 'package:talker_rhttp_logger/src/utils/http_response_extension.dart';
+
+import 'package:talker_rhttp_logger/talker_rhttp_logger.dart';
 
 class TalkerRhttpLogger extends Interceptor {
   TalkerRhttpLogger({
@@ -64,6 +65,7 @@ class TalkerRhttpLogger extends Interceptor {
         message,
         httpRequest: request,
         settings: settings,
+        dataBody: await request.body.readableData(),
       );
       _talker.logCustom(httpLog);
     } catch (e) {
@@ -81,11 +83,10 @@ class TalkerRhttpLogger extends Interceptor {
     }
     try {
       final message = response.request.url;
-      final httpLog = RhttpResponseLog(
-        message,
-        settings: settings,
-        response: response,
-      );
+      final httpLog = RhttpResponseLog(message,
+          settings: settings,
+          response: response,
+          responseData: (await response.readableData()));
       _talker.logCustom(httpLog);
     } catch (e) {
       _talker.error(e);

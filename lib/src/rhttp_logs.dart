@@ -2,7 +2,8 @@ import 'dart:convert';
 
 import 'package:talker/talker.dart';
 import 'package:rhttp/rhttp.dart';
-import 'package:talker_rhttp_logger/src/talker_rhttp_logger_settings.dart';
+
+import 'package:talker_rhttp_logger/talker_rhttp_logger.dart';
 
 // Define a map for status codes and messages
 final Map<int, String> statusMessages = {
@@ -86,10 +87,14 @@ class RhttpRequestLog extends TalkerLog {
     String super.message, {
     required this.httpRequest,
     required this.settings,
+    required this.dataBody,
   });
 
   final HttpRequest httpRequest;
   final TalkerRhttpLoggerSettings settings;
+
+  /// AS generateTextMessage not supoorts asynchronous generation
+  final String? dataBody;
 
   @override
   AnsiPen get pen => settings.requestPen ?? (AnsiPen()..xterm(219));
@@ -103,7 +108,6 @@ class RhttpRequestLog extends TalkerLog {
   }) {
     var msg = '[$title] [${httpRequest.method.name.toUpperCase()}] $message';
 
-    final data = httpRequest.body;
     final headers = switch (httpRequest.headers) {
       null => null,
       HttpHeaderMap(:final map) => map,
@@ -112,8 +116,8 @@ class RhttpRequestLog extends TalkerLog {
     };
 
     try {
-      if (settings.printRequestData && data != null) {
-        msg += '\nData: $data';
+      if (settings.printRequestData && dataBody != null) {
+        msg += '\nData: $dataBody';
       }
       if (settings.printRequestHeaders && headers != null) {
         final prettyHeaders = encoder.convert(headers);
@@ -124,8 +128,8 @@ class RhttpRequestLog extends TalkerLog {
       // Optionally log the error
       msg += '\nConversion error: ${e.toString()}';
       // Or provide raw data instead
-      if (data != null) {
-        msg += '\nRaw data: $data';
+      if (dataBody != null) {
+        msg += '\nRaw data: $dataBody';
       }
       if (headers != null) {
         msg += '\nRaw headers: $headers';
@@ -140,10 +144,12 @@ class RhttpResponseLog extends TalkerLog {
     String super.message, {
     required this.response,
     required this.settings,
+    required this.responseData,
   });
 
   final HttpResponse response;
   final TalkerRhttpLoggerSettings settings;
+  final String? responseData;
 
   @override
   AnsiPen get pen => settings.responsePen ?? (AnsiPen()..xterm(46));
@@ -159,11 +165,7 @@ class RhttpResponseLog extends TalkerLog {
         '[$title] [${response.request.method.name.toUpperCase()}] $message';
 
     final responseMessage = getStatusMessage(response.statusCode);
-    final data = switch (response) {
-      HttpTextResponse(:final body) => body,
-      HttpBytesResponse(:final body) => body,
-      HttpStreamResponse(:final body) => body,
-    };
+
     final headers = response.headerMap;
 
     msg += '\nStatus: ${response.statusCode}';
@@ -174,7 +176,7 @@ class RhttpResponseLog extends TalkerLog {
 
     try {
       if (settings.printResponseData) {
-        msg += '\nData: $data';
+        msg += '\nData: $responseData';
       }
       if (settings.printResponseHeaders && headers.isNotEmpty) {
         final prettyHeaders = encoder.convert(headers);
@@ -185,7 +187,7 @@ class RhttpResponseLog extends TalkerLog {
       // Optionally log the error
       msg += '\nConversion error: ${e.toString()}';
       // Or provide raw data instead
-      msg += '\nRaw data: $data';
+      msg += '\nRaw data: $responseData';
       msg += '\nRaw headers: $headers';
     }
     return msg;

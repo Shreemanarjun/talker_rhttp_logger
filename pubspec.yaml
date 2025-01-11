@@ -17,8 +17,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  talker: ^4.5.1
-  rhttp: ^0.9.3
+  talker: ^4.6.0
+  rhttp: ^0.9.8
 
 dev_dependencies:
   flutter_test:
