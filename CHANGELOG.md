@@ -1,4 +1,7 @@
-### 0.0.7
+## 0.0.8
+- Fixed a bug to handle null json request and response data
+-
+## 0.0.7
 - Fix URL Bugs in response logs
 
 
