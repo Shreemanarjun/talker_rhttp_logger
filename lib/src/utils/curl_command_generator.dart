@@ -56,9 +56,7 @@ String generateCurlCommand({
             .replaceAll('","', ',');
         parts.add("-d $unquotedJson");
       }
-    } catch (_) {
-      parts.add("-d $dataBody");
-    }
+    } catch (_) {}
   }
 
   return parts.join(' ');
