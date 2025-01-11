@@ -67,40 +67,5 @@ void main() {
       logger.afterResponse(response);
       expect(talker.history.last.message, logMessage);
     });
-
-    // test('onError should log DioErrorLog', () async {
-    //   final talker = Talker();
-    //   final logger = TalkerRhttpLogger(talker: talker);
-    //   final dio = Dio();
-    //   dio.interceptors.add(logger);
-
-    //   try {
-    //     await dio.get('asdsada');
-    //   } catch (_) {}
-    //   expect(talker.history, isNotEmpty);
-    //   expect(talker.history.last, isA<DioErrorLog>());
-    // });
-
-    // test('onResponse method should log http response headers', () {
-    //   final logger = TalkerRhttpLogger(
-    //       talker: talker,
-    //       settings: TalkerRhttpLoggerSettings(printResponseHeaders: true));
-
-    //   final options = RequestOptions(path: '/test');
-    //   final response = Response(
-    //       requestOptions: options,
-    //       statusCode: 200,
-    //       headers: Headers()..add("HEADER", "VALUE"));
-    //   logger.onResponse(response, ResponseInterceptorHandler());
-    //   expect(
-    //       talker.history.last.generateTextMessage(),
-    //       '[http-response] [GET] /test\n'
-    //       'Status: 200\n'
-    //       'Headers: {\n'
-    //       '  "HEADER": [\n'
-    //       '    "VALUE"\n'
-    //       '  ]\n'
-    //       '}');
-    // });
   });
 }
