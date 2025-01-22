@@ -220,11 +220,11 @@ class RhttpErrorLog extends TalkerLog {
 
     try {
       final responseMessage = switch (rhttpException) {
-        RhttpInvalidCertificateException(:final message) => message,
-        RhttpConnectionException(:final message) => message,
+        RhttpInvalidCertificateException() => rhttpException.toString(),
+        RhttpConnectionException() => rhttpException.toString(),
         RhttpStatusCodeException(:final statusCode) =>
           getStatusMessage(statusCode),
-        RhttpUnknownException(:final message) => message,
+        RhttpUnknownException() => rhttpException.toString(),
         _ => null,
       };
       final statusCode = switch (rhttpException) {
@@ -244,7 +244,7 @@ class RhttpErrorLog extends TalkerLog {
         msg += '\nStatus: $statusCode';
       }
 
-      if (settings.printErrorMessage) {
+      if (settings.printErrorMessage && responseMessage != null) {
         msg += '\nMessage: $responseMessage';
       }
 
@@ -253,7 +253,7 @@ class RhttpErrorLog extends TalkerLog {
           data.toString().isNotEmpty) {
         msg += '\nData:\n$data';
       }
-      if (settings.printErrorHeaders) {
+      if (settings.printErrorHeaders && headers != null && headers.isNotEmpty) {
         final prettyHeaders = encoder.convert(headers);
         msg += '\nHeaders: $prettyHeaders';
       }
