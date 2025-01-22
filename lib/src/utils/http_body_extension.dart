@@ -18,7 +18,7 @@ extension HttpBodyExtension on HttpBody? {
           form.entries.map((e) => '${e.key}: ${e.value}').join('\n'),
         HttpBodyMultipart(:final List<(String, MultipartItem)> parts) =>
           parts.map((part) => '${part.$1}: ${part.$2}').join('\n'),
-        _ => toString(),
+        _ => null,
       };
     } catch (e) {
       return null;

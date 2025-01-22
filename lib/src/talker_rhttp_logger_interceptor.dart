@@ -64,7 +64,7 @@ class TalkerRhttpLogger extends Interceptor {
         message,
         httpRequest: request,
         settings: settings,
-        dataBody: await request.body.readableData(),
+        dataBody: await request.body?.readableData(),
       );
       _talker.logCustom(httpLog);
     } catch (e) {
@@ -94,7 +94,7 @@ class TalkerRhttpLogger extends Interceptor {
           httpRequest: response.request,
           httpResponse: response,
           settings: settings,
-          requestBody: await response.request.body.readableData(indent: false),
+          requestBody: await response.request.body?.readableData(indent: false),
           responseBody: await response.readableData(indent: false),
         );
         _talker.logCustom(curllog);
@@ -123,7 +123,7 @@ class TalkerRhttpLogger extends Interceptor {
       _talker.logCustom(httpErrorLog);
       if (settings.printCurlCommand) {
         final Object? data = switch (exception) {
-          RhttpStatusCodeException(:final body) => body,
+          RhttpStatusCodeException(:final Object body) => body,
           _ => null
         };
         final curllog = RhttpCurlLog(
@@ -131,7 +131,7 @@ class TalkerRhttpLogger extends Interceptor {
           httpRequest: exception.request,
           settings: settings,
           requestBody: await exception.request.body.readableData(indent: false),
-          responseBody: data.toString(),
+          responseBody: data?.toString(),
           httpResponse: switch (exception) {
             RhttpStatusCodeException(
               :final statusCode,
@@ -139,7 +139,7 @@ class TalkerRhttpLogger extends Interceptor {
               :final body,
             ) =>
               HttpTextResponse(
-                body: body.toString(),
+                body: body?.toString() ?? "",
                 request: exception.request,
                 version: HttpVersion.other,
                 statusCode: statusCode,

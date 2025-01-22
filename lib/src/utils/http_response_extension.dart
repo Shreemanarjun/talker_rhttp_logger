@@ -8,7 +8,7 @@ extension HttpResponseExtension on HttpResponse? {
   Future<String?> readableData({bool indent = true}) async {
     try {
       return switch (this) {
-        null => "",
+        null => null,
         HttpTextResponse(:final String body, :final dynamic bodyToJson) =>
           _tryJsonEncode(bodyToJson, indent: indent) ??
               bodyToJson?.toString() ??

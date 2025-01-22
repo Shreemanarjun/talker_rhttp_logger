@@ -1,12 +1,13 @@
+## 0.0.9
+- Refactor curl command generation to handle null JSON data
+
 ## 0.0.8
 - Fixed a bug to handle null json request and response data
--
+
 ## 0.0.7
 - Fix URL Bugs in response logs
 
-
 ## 0.0.6
-
 - **Added Features:**
   - Introduced `RhttpLogs` and `RhttpCurlLog` classes for enhanced logging capabilities.
   - Added a curl command generator utility for easy curl command generation.
