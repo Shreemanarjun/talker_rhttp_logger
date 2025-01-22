@@ -1,3 +1,7 @@
+# 0.0.10
+- Fix error message
+
+
 ## 0.0.9
 - Refactor curl command generation to handle null JSON data
 
