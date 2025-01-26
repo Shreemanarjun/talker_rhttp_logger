@@ -1,4 +1,8 @@
-# 0.0.10
+## 0.0.11
+- Update dependencies: talker to version 4.6.7 and rhttp to version 0.9.8
+
+
+## 0.0.10
 - Fix error message
 
 
