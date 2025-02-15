@@ -1,3 +1,7 @@
+## 0.0.12
+- Refactored Talker Interceptor to fix null issues
+- ignored some file which should not be committed
+
 ## 0.0.11
 - Update dependencies: talker to version 4.6.7 and rhttp to version 0.9.8
 
