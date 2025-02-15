@@ -123,14 +123,14 @@ class TalkerRhttpLogger extends Interceptor {
       _talker.logCustom(httpErrorLog);
       if (settings.printCurlCommand) {
         final Object? data = switch (exception) {
-          RhttpStatusCodeException(:final Object body) => body,
+          RhttpStatusCodeException(:final Object? body) => body,
           _ => null
         };
         final curllog = RhttpCurlLog(
           message,
           httpRequest: exception.request,
           settings: settings,
-          requestBody: await exception.request.body.readableData(indent: false),
+          requestBody: await exception.request.body?.readableData(indent: false),
           responseBody: data?.toString(),
           httpResponse: switch (exception) {
             RhttpStatusCodeException(

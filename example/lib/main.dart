@@ -44,7 +44,9 @@ class _RhttpLoggerUiState extends State<RhttpLoggerUi> {
 
   Future<String> getComments() async {
     rhttpClient = await RhttpClient.create(
-      settings: const ClientSettings(baseUrl: "https://gggg"),
+      settings: const ClientSettings(
+        baseUrl: "https://run.mocky.io/v3/0ea76d29-90e5-4dca-a2c1-6a9aacaa6a96",
+      ),
       interceptors: [
         TalkerRhttpLogger(
           talker: TalkerFlutter.init(),
@@ -57,9 +59,9 @@ class _RhttpLoggerUiState extends State<RhttpLoggerUi> {
       ],
     );
     final response = await rhttpClient.post(
-      '/200s',
+      '',
       body: const HttpBody.json(
-        "null",
+        {},
       ),
       headers: const HttpHeaders.rawMap({
         'Accept': 'application/json',
