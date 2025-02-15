@@ -130,7 +130,8 @@ class TalkerRhttpLogger extends Interceptor {
           message,
           httpRequest: exception.request,
           settings: settings,
-          requestBody: await exception.request.body?.readableData(indent: false),
+          requestBody:
+              await exception.request.body?.readableData(indent: false),
           responseBody: data?.toString(),
           httpResponse: switch (exception) {
             RhttpStatusCodeException(
