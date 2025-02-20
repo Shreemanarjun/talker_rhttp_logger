@@ -1,3 +1,6 @@
+## 0.0.14
+- Update talker dependency from ^4.6.7 to ^4.6.12
+
 ## 0.0.13
 - Code Formatted for PANA Sore
 
