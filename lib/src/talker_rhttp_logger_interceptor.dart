@@ -59,7 +59,7 @@ class TalkerRhttpLogger extends Interceptor {
       return Interceptor.stop();
     }
     try {
-      final message = "${request.settings?.baseUrl??""}${request.url}";
+      final message = "${request.settings?.baseUrl ?? ""}${request.url}";
       final httpLog = RhttpRequestLog(
         message,
         httpRequest: request,
@@ -68,7 +68,7 @@ class TalkerRhttpLogger extends Interceptor {
       );
       _talker.logCustom(httpLog);
     } catch (e) {
-      _talker.error(e);
+      _talker.error("Interceptor beforeRequest error", e);
     }
     return Interceptor.next(request);
   }
@@ -82,7 +82,7 @@ class TalkerRhttpLogger extends Interceptor {
     }
     try {
       final message =
-          "${response.request.settings?.baseUrl??""}${response.request.url} ";
+          "${response.request.settings?.baseUrl ?? ""}${response.request.url} ";
       final httpLog = RhttpResponseLog(message,
           settings: settings,
           response: response,
@@ -100,7 +100,7 @@ class TalkerRhttpLogger extends Interceptor {
         _talker.logCustom(curllog);
       }
     } catch (e) {
-      _talker.error(e);
+      _talker.error("Interceptor afterResponse error", e);
     }
     return Interceptor.next(response);
   }
@@ -114,7 +114,7 @@ class TalkerRhttpLogger extends Interceptor {
     }
     try {
       final message =
-          "${exception.request.settings?.baseUrl??""}${exception.request.url}";
+          "${exception.request.settings?.baseUrl ?? ""}${exception.request.url}";
       final httpErrorLog = RhttpErrorLog(
         message,
         rhttpException: exception,
@@ -152,8 +152,7 @@ class TalkerRhttpLogger extends Interceptor {
         _talker.logCustom(curllog);
       }
     } catch (e) {
-      _talker.error(e);
-      //pass
+      _talker.error("Interceptor onError error", e);
     }
     super.onError(exception);
     return Interceptor.next(exception);

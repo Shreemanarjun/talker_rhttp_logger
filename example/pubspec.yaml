@@ -9,9 +9,10 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  rhttp: ^0.9.8
+  rhttp: ^0.10.0
   talker_flutter: ^4.6.0
-  talker_rhttp_logger: ^0.0.5
+  talker_rhttp_logger:
+    path: ./
 
 dev_dependencies:
   flutter_test:
