@@ -1,3 +1,9 @@
+
+## 0.0.15
+- Fix base url null if not provided in request
+- Fix error logging in intercept
+- Fix example dependency
+
 ## 0.0.14
 - Update talker dependency from ^4.6.7 to ^4.6.12
 
