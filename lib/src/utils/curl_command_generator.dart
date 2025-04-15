@@ -7,7 +7,7 @@ String generateCurlCommand({
   String? responseBody,
   String? dataBody,
 }) {
-  final method = request.method.name.toUpperCase();
+  final method = request.method.value;
   final url = "${request.settings?.baseUrl??""}${request.url}";
   final headers = request.headers;
 
