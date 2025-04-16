@@ -1,3 +1,8 @@
+## 0.0.16
+
+-   **Fix:** Updated to support rhttp version 0.11, ensuring compatibility and leveraging the latest features.  by @DSilence.
+-   **Fix:** Improved code formatting across the package for better readability and maintainability.
+-   **Refactor:** Optimized Rhttp logs and curl command generator by removing unnecessary variable declarations and simplifying string concatenation, enhancing performance and code clarity.
 
 ## 0.0.15
 - Fix base url null if not provided in request
