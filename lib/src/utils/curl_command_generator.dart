@@ -8,7 +8,7 @@ String generateCurlCommand({
   String? dataBody,
 }) {
   final method = request.method.value;
-  final url = "${request.settings?.baseUrl??""}${request.url}";
+  final url = "${request.settings?.baseUrl ?? ""}${request.url}";
   final headers = request.headers;
 
   var parts = <String>[];

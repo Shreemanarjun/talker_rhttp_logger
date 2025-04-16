@@ -162,8 +162,7 @@ class RhttpResponseLog extends TalkerLog {
   String generateTextMessage({
     TimeFormat timeFormat = TimeFormat.timeAndSeconds,
   }) {
-    var msg =
-        '[$title]\n${response.request.method.value} $message';
+    var msg = '[$title]\n${response.request.method.value} $message';
 
     final responseMessage = getStatusMessage(response.statusCode);
 
@@ -215,8 +214,7 @@ class RhttpErrorLog extends TalkerLog {
   String generateTextMessage({
     TimeFormat timeFormat = TimeFormat.timeAndSeconds,
   }) {
-    var msg =
-        '[$title]\n${rhttpException.request.method.value} $message';
+    var msg = '[$title]\n${rhttpException.request.method.value} $message';
 
     try {
       final responseMessage = switch (rhttpException) {
