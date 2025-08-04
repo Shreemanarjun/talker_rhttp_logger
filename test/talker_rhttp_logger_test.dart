@@ -63,6 +63,7 @@ void main() {
           statusCode: 200,
           headers: List.empty(),
           body: "",
+          remoteIp: null,
           version: HttpVersion.http1_1);
       final logMessage = response.request.url;
       await logger.afterResponse(response);

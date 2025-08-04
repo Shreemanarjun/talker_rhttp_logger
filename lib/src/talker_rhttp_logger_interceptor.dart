@@ -145,6 +145,7 @@ class TalkerRhttpLogger extends Interceptor {
                 version: HttpVersion.other,
                 statusCode: statusCode,
                 headers: headers,
+                remoteIp: null
               ),
             _ => null
           },

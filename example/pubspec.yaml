@@ -9,7 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  rhttp: ^0.11.0
+  rhttp: ^0.13.0
   talker_flutter: ^4.6.0
   talker_rhttp_logger:
     path: ./
