@@ -82,7 +82,7 @@ class TalkerRhttpLogger extends Interceptor {
     }
     try {
       final message =
-          "${response.request.settings?.baseUrl ?? ""}${response.request.url} ";
+          "${response.request.settings?.baseUrl ?? ""}${response.request.url}";
       final httpLog = RhttpResponseLog(message,
           settings: settings,
           response: response,
@@ -140,13 +140,12 @@ class TalkerRhttpLogger extends Interceptor {
               :final body,
             ) =>
               HttpTextResponse(
-                body: body?.toString() ?? "",
-                request: exception.request,
-                version: HttpVersion.other,
-                statusCode: statusCode,
-                headers: headers,
-                remoteIp: null
-              ),
+                  body: body?.toString() ?? "",
+                  request: exception.request,
+                  version: HttpVersion.other,
+                  statusCode: statusCode,
+                  headers: headers,
+                  remoteIp: null),
             _ => null
           },
         );
