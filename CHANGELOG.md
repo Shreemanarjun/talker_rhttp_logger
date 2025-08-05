@@ -1,3 +1,8 @@
+## 0.0.17
+
+-   **Fix:** Fixed rhttp logs message. Thanks to @DSilence for the contribution in PR #2.
+-   **Chore:** Updated `talker` package to the latest version.
+
 ## 0.0.16
 
 -   **Fix:** Updated to support rhttp version 0.11, ensuring compatibility and leveraging the latest features.  by @DSilence.
