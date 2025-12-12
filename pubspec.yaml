@@ -1,6 +1,6 @@
 name: talker_rhttp_logger
 description: "A Flutter package for logging HTTP requests and responses using Talker."
-version: 0.0.17
+version: 0.0.18
 homepage: https://github.com/Shreemanarjun/talker_rhttp_logger
 repository: https://github.com/Shreemanarjun/talker_rhttp_logger
 issue_tracker: https://github.com/Shreemanarjun/talker_rhttp_logger/issues/
@@ -17,8 +17,8 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  talker: ^4.9.3
-  rhttp: ^0.13.0
+  talker: ^5.1.7
+  rhttp: ^0.15.0
 
 dev_dependencies:
   flutter_test:

@@ -1,3 +1,7 @@
+## 0.0.18
+
+-   **Fix:** Fixed undefined `TalkerLogType` error by replacing enum-based log keys with string literals to support talker v5.1.7+ breaking changes.
+
 ## 0.0.17
 
 -   **Fix:** Fixed rhttp logs message. Thanks to @DSilence for the contribution in PR #2.
